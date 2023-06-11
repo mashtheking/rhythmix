@@ -42,8 +42,8 @@ const AvatarModal = () => {
 
       //Compress image before uploading
       new Compressor(imageFile, {
-        maxWidth: 512,
-        maxHeight: 512,
+        maxWidth: 1024,
+        maxHeight: 1024,
 
         async success(file: File | Blob) {
           const uniqueID = uniqid();

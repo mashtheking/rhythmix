@@ -1,6 +1,7 @@
 import {IconType} from "react-icons";
 import Link from "next/link";
 import {twMerge} from "tailwind-merge";
+import useUser from "@/hooks/useUser";
 
 interface SidebarItemProps {
   icons: IconType[];
@@ -11,6 +12,11 @@ interface SidebarItemProps {
 
 const SidebarItem = ({ icons, label, active, href }: SidebarItemProps) => {
   const Icon = icons[active ? 1 : 0];
+  const { user } = useUser();
+
+  if (!user && href === "/upload") {
+    return null;
+  }
 
   return (
     <Link
