@@ -2,7 +2,7 @@
 
 import Modal from "@/components/modals/Modal";
 import { useSessionContext, useSupabaseClient } from "@supabase/auth-helpers-react";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import {Auth} from "@supabase/auth-ui-react";
 import {ThemeSupa, ViewType} from "@supabase/auth-ui-shared";
 import useAuthModal from "@/hooks/useAuthModal";
@@ -14,7 +14,7 @@ const AuthModal = () => {
   const router = useRouter();
   const { session } = useSessionContext();
   const { isOpen, onClose} = useAuthModal();
-  const [ view, setView ] = useState<ViewType>('sign_up');
+  const [ view, setView ] = useState<ViewType>('sign_in');
 
   useEffect(() => {
     if (session) {

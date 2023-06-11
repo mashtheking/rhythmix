@@ -4,8 +4,8 @@ import Modal from "@/components/modals/Modal";
 import useUploadModal from "@/hooks/useUploadModal";
 import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
 import {useState} from "react";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 import {toast} from "react-hot-toast";
 import useUser from "@/hooks/useUser";
 import uniqid from "uniqid";
@@ -133,12 +133,14 @@ const UploadModal = () => {
           disabled={isLoading}
           {...register('title', { required: true })}
           placeholder="Song title"
+          className="bg-gray-200"
         />
         <Input
           id="author"
           disabled={isLoading}
           {...register('author', { required: true })}
           placeholder="Song author"
+          className="bg-gray-200"
         />
         <div>
           <div className="pb-1">
@@ -150,6 +152,7 @@ const UploadModal = () => {
             disabled={isLoading}
             accept=".mp3"
             {...register('song', { required: true })}
+            className="bg-gray-200"
           />
         </div>
         <div>
@@ -162,6 +165,7 @@ const UploadModal = () => {
             disabled={isLoading}
             accept="image/*"
             {...register('image', { required: true })}
+            className="bg-gray-200"
           />
         </div>
         <Button

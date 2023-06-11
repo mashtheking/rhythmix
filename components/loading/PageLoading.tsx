@@ -1,6 +1,6 @@
 'use client';
 
-import Box from "@/components/Box";
+import Box from "@/components/containers/Box";
 import {Audio} from "react-loader-spinner";
 
 const PageLoading = () => {

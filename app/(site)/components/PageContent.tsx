@@ -1,7 +1,7 @@
 'use client';
 
 import {Song} from "@/types";
-import SongCard from "@/components/SongCard";
+import SongCard from "@/components/containers/SongCard";
 import useOnPlay from "@/hooks/useOnPlay";
 
 interface PageContentProps {
@@ -33,4 +33,5 @@ const PageContent = ({ songs }: PageContentProps) => {
     </div>
   );
 }
+
 export default PageContent;

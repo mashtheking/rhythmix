@@ -5,17 +5,27 @@ import {useEffect, useState} from "react";
 import {postData} from "@/libs/helpers";
 import {toast} from "react-hot-toast";
 import useSubscribeModal from "@/hooks/useSubscribeModal";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import useAuthModal from "@/hooks/useAuthModal";
-import {BsArrowRightCircleFill} from "react-icons/bs";
+import {BsArrowRightCircleFill, BsTrash} from "react-icons/bs";
 import Spinner from "@/components/loading/Spinner";
 import {FaCrown} from "react-icons/fa";
+import {Song} from "@/types";
+import MediaItem from "@/components/containers/MediaItem";
+import useOnPlay from "@/hooks/useOnPlay";
+import useConfirmModal from "@/hooks/useConfirmModal";
 
-const AccountContent = () => {
+interface AccountContentProps {
+  songs: Song[];
+}
+
+const AccountContent = ({ songs }: AccountContentProps) => {
   const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
+  const confirmModal = useConfirmModal();
   const { user, subscription, isLoading } = useUser();
   const [loading, setLoading] = useState(false);
+  const onPlay = useOnPlay(songs);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -48,7 +58,8 @@ const AccountContent = () => {
   };
 
   return (
-    <div className="mb-7 px-6 flex justify-center md:justify-start">
+    <div>
+      <div className="mb-7 px-6 flex justify-center md:justify-start">
       {
         !subscription && (
           <div className="flex flex-col gap-y-4">
@@ -93,6 +104,47 @@ const AccountContent = () => {
               </div>
             </Button>
           </div>
+        )
+      }
+    </div>
+      {
+        songs.length === 0 ? (
+          <div className="flex flex-col gap-y-2 w-full px-6 text-gray-500">
+            No songs uploaded.
+          </div>
+        ) : (
+          <div className="mt-2">
+            <h1 className="text-gray-900 text-2xl font-semibold px-6">
+              Your uploads
+            </h1>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4 w-full px-6 justify-center">
+              {
+                songs.map((song) => (
+                  <div
+                    key={song.id}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <div className="flex-1 truncate">
+                      <MediaItem
+                        onClick={(id: string) => onPlay(id)}
+                        song={song}
+                      />
+                    </div>
+                      <button
+                        className="text-gray-500 hover:text-rose-500 hover:scale-110 transition-all pr-3"
+                        onClick={() => {
+                          confirmModal.setSong(song);
+                          confirmModal.onOpen();
+                        }}
+                      >
+                        <BsTrash size={20} />
+                      </button>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+
         )
       }
     </div>

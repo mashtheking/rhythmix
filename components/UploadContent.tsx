@@ -6,9 +6,11 @@ import useUser from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 import useUploadModal from "@/hooks/useUploadModal";
 import {Song} from "@/types";
-import MediaItem from "@/components/MediaItem";
+import MediaItem from "@/components/containers/MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
 import useSubscribeModal from "@/hooks/useSubscribeModal";
+import {BsTrash} from "react-icons/bs";
+import useConfirmModal from "@/hooks/useConfirmModal";
 
 interface UploadContentProps {
   songs: Song[];
@@ -19,6 +21,7 @@ const UploadContent = ({ songs }: UploadContentProps) => {
   const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
+  const confirmModal = useConfirmModal();
   const onPlay = useOnPlay(songs);
 
   const onClick = () => {
@@ -58,11 +61,24 @@ const UploadContent = ({ songs }: UploadContentProps) => {
       <div className="flex flex-col gap-y-2 mt-4 px-3">
         {
           songs.map((song) => (
-            <MediaItem
+            <div
+              className="flex items-center justify-between"
               key={song.id}
-              onClick={(id: string) => onPlay(id)}
-              song={song}
-            />
+            >
+              <MediaItem
+                onClick={(id: string) => onPlay(id)}
+                song={song}
+              />
+              <button
+                className="text-gray-500 hover:text-rose-500 hover:scale-110 transition-all pr-3"
+                onClick={() => {
+                  confirmModal.setSong(song);
+                  confirmModal.onOpen();
+                }}
+              >
+                <BsTrash size={20} />
+              </button>
+            </div>
           ))
         }
       </div>

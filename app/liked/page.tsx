@@ -1,5 +1,5 @@
 import getLikedSongs from "@/actions/getLikedSongs";
-import Header from "@/components/Header";
+import Header from "@/components/containers/Header";
 import LikedContent from "@/app/liked/components/LikedContent";
 import {AiFillHeart} from "react-icons/ai";
 

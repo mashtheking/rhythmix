@@ -1,9 +1,12 @@
-import Header from "@/components/Header";
+import Header from "@/components/containers/Header";
 import AccountContent from "@/app/account/components/AccountContent";
 import Avatar from "@/components/Avatar";
 import AccountHeaderText from "@/components/AccountHeaderText";
+import getSongsByUserId from "@/actions/getSongsByUserId";
 
-const Account = () => {
+const Account = async () => {
+  const userSongs = await getSongsByUserId();
+
   return (
     <div className="bg-gray-200 md:rounded-lg h-full w-full overflow-hidden overflow-y-auto">
       <Header>
@@ -19,7 +22,7 @@ const Account = () => {
           </div>
         </div>
       </Header>
-      <AccountContent />
+      <AccountContent songs={userSongs} />
     </div>
   );
 }

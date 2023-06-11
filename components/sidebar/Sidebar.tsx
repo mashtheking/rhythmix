@@ -2,8 +2,8 @@
 
 import {ReactNode} from "react";
 import useSidebarRoutes from "@/hooks/useSidebarRoutes";
-import Box from "@/components/Box";
-import SidebarItem from "@/components/SidebarItem";
+import Box from "@/components/containers/Box";
+import SidebarItem from "@/components/sidebar/SidebarItem";
 import UploadContent from "@/components/UploadContent";
 import {Song} from "@/types";
 import usePlayer from "@/hooks/usePlayer";

@@ -5,7 +5,7 @@ import {usePathname, useRouter} from "next/navigation";
 import {twMerge} from "tailwind-merge";
 import {RxCaretLeft, RxCaretRight} from "react-icons/rx";
 import {AiOutlineHome, AiOutlineSearch} from "react-icons/ai";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import {useSupabaseClient} from "@supabase/auth-helpers-react";
 import useUser from "@/hooks/useUser";

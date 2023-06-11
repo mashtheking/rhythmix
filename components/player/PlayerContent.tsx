@@ -1,16 +1,16 @@
 'use client';
 
 import {Song} from "@/types";
-import MediaItem from "@/components/MediaItem";
+import MediaItem from "@/components/containers/MediaItem";
 import LikeButton from "@/components/LikeButton";
 import {BsPauseFill, BsPlayFill} from "react-icons/bs";
 import {AiFillStepBackward, AiFillStepForward} from "react-icons/ai";
-import VolumeSlider from "@/components/VolumeSlider";
+import VolumeSlider from "@/components/player/VolumeSlider";
 import usePlayer from "@/hooks/usePlayer";
 import {useEffect, useState} from "react";
 import {ImVolumeHigh, ImVolumeLow, ImVolumeMedium, ImVolumeMute, ImVolumeMute2} from "react-icons/im";
 import useSound from "use-sound";
-import SeekSlider from "@/components/SeekSlider";
+import SeekSlider from "@/components/player/SeekSlider";
 import useVolume from "@/hooks/useVolume";
 
 interface PlayerContentProps {
@@ -46,6 +46,7 @@ const PlayerContent = ({song, songUrl}: PlayerContentProps) => {
     const prevSong = player.ids[((currentIndex - 1) + player.ids.length) % player.ids.length];
 
     player.setId(prevSong);
+    setIsPlaying(true);
   }
 
   //This is the hook because of which we had to add key prop to PlayerContent because it can't handle dynamic url
@@ -55,7 +56,6 @@ const PlayerContent = ({song, songUrl}: PlayerContentProps) => {
       volume: volume,
       onplay: () => setIsPlaying(true),
       onend: () => {
-        setIsPlaying(false);
         onPlayNext();
       },
       onpause: () => setIsPlaying(false),

@@ -1,13 +1,13 @@
 import './globals.css'
 import { Roboto } from 'next/font/google'
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import { ReactNode } from "react";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import getSongsByUserId from "@/actions/getSongsByUserId";
-import Player from "@/components/Player";
+import Player from "@/components/player/Player";
 import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
 
 const font = Roboto({

@@ -2,7 +2,7 @@
 
 import Modal from "@/components/modals/Modal";
 import {Price, ProductWithPrice} from "@/types";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import {useState} from "react";
 import useUser from "@/hooks/useUser";
 import {toast} from "react-hot-toast";
@@ -78,7 +78,7 @@ const SubscribeModal = ({ products }: SubscribeModalProps) => {
                 key={price.id}
                 onClick={() => handleCheckout(price)}
                 disabled={isLoading || price.id === priceIdLoading}
-                className="rounded-md"
+                className="rounded-md text-white"
               >
                 {`Subscribe for ${formatPrice(price)} a ${price.interval}`}
               </Button>

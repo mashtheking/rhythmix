@@ -1,5 +1,5 @@
 import getSongsByTitleOrAuthor from "@/actions/getSongsByTitleOrAuthor";
-import Header from "@/components/Header";
+import Header from "@/components/containers/Header";
 import SearchInput from "@/components/SearchInput";
 import SearchContent from "@/app/search/components/SearchContent";
 
@@ -28,4 +28,5 @@ const Search = async ({ searchParams }: SearchProps) => {
     </div>
   );
 }
+
 export default Search;

@@ -4,7 +4,7 @@ import qs from "query-string";
 import {useEffect, useState} from "react";
 import useDebounce from "@/hooks/useDebounce";
 import {useRouter} from "next/navigation";
-import Input from "@/components/Input";
+import Input from "@/components/ui/Input";
 
 const SearchInput = () => {
   const router = useRouter();

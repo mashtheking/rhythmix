@@ -6,6 +6,7 @@ import UploadModal from "@/components/modals/UploadModal";
 import SubscribeModal from "@/components/modals/SubscribeModal";
 import {ProductWithPrice} from "@/types";
 import AvatarModal from "@/components/modals/AvatarModal";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 
 interface ModalProviderProps {
   products: ProductWithPrice[];
@@ -27,6 +28,7 @@ const ModalProvider = ({ products }: ModalProviderProps) => {
       <AuthModal />
       <UploadModal />
       <AvatarModal />
+      <ConfirmModal />
       <SubscribeModal products={products}/>
     </>
   );
