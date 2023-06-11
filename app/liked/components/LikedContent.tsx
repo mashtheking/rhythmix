@@ -21,7 +21,7 @@ const LikedContent = ({ songs }: LikedContentProps) => {
     if (!isLoading && !user) {
       onOpen();
     }
-  }, [isLoading, user]);
+  }, [isLoading, user, onOpen]);
 
   if (!isLoading && !user) {
     return (

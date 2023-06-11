@@ -31,7 +31,7 @@ const AccountContent = ({ songs }: AccountContentProps) => {
     if (!isLoading && !user) {
       authModal.onOpen();
     }
-  }, [isLoading, user]);
+  }, [isLoading, user, authModal]);
 
   if (!isLoading && !user) {
     return (
