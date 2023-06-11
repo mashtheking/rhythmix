@@ -5,16 +5,18 @@ import {AiOutlinePlus} from "react-icons/ai";
 import useUser from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 import useUploadModal from "@/hooks/useUploadModal";
-import {Song} from "@/types/types";
+import {Song} from "@/types";
 import MediaItem from "@/components/MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
+import useSubscribeModal from "@/hooks/useSubscribeModal";
 
-interface PlaylistProps {
+interface UploadContentProps {
   songs: Song[];
 }
 
-const Playlist = ({ songs }: PlaylistProps) => {
-  const { user } = useUser();
+const UploadContent = ({ songs }: UploadContentProps) => {
+  const { user, subscription } = useUser();
+  const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
   const onPlay = useOnPlay(songs);
@@ -24,7 +26,10 @@ const Playlist = ({ songs }: PlaylistProps) => {
       return authModal.onOpen();
     }
 
-    //TODO: Check for subscription
+    if (!subscription) {
+      return subscribeModal.onOpen();
+    }
+
     return uploadModal.onOpen();
   };
 
@@ -32,17 +37,24 @@ const Playlist = ({ songs }: PlaylistProps) => {
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 pt-4">
         <div className="inline-flex items-center gap-x-2">
-          <TbPlaylist className="text-gray-400" size={26} />
-          <p className="text-gray-400 font-medium text-md">
-            Your Playlist
+          <TbPlaylist className="text-gray-500" size={26} />
+          <p className="text-gray-500 font-medium text-md">
+            Your uploads
           </p>
         </div>
         <AiOutlinePlus
           onClick={onClick}
-          size={20}
-          className="text-gray-400 cursor-pointer hover:text-white transition-all"
+          size={24}
+          className="text-gray-500 cursor-pointer hover:text-orange-500 transition-all"
         />
       </div>
+      {
+        songs.length === 0 && (
+          <p className="text-gray-400 pl-5 mt-5">
+            No uploads from you.
+          </p>
+        )
+      }
       <div className="flex flex-col gap-y-2 mt-4 px-3">
         {
           songs.map((song) => (
@@ -57,4 +69,4 @@ const Playlist = ({ songs }: PlaylistProps) => {
     </div>
   );
 }
-export default Playlist;
+export default UploadContent;

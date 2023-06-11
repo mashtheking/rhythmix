@@ -1,8 +1,8 @@
 'use client';
 
-import Image from "next/image";
 import {useRouter} from "next/navigation";
-import {FaPlay} from "react-icons/fa";
+import {AiFillHeart} from "react-icons/ai";
+import {BsArrowRightCircleFill} from "react-icons/bs";
 
 interface ListItemProps {
   image: string;
@@ -10,33 +10,32 @@ interface ListItemProps {
   href: string;
 }
 
-const ListItem = ({ image, name, href }: ListItemProps) => {
+const ListItem = ({ name, href }: ListItemProps) => {
   const router = useRouter();
 
   const onClick = () => {
-    //add auth before push
     router.push(href);
   }
 
   return (
     <button
       onClick={onClick}
-      className="relative group flex items-center rounded-md overflow-hidden gap-x-4 bg-gray-100/10 hover:bg-gray-100/20 transition-all"
+      className="relative group flex items-center rounded-md overflow-hidden shadow-md gap-x-4 bg-gray-900/10 hover:bg-gray-700/20 transition-all"
     >
-      <div className="relative min-h-[64px] min-w-[64px] drop-shadow-md">
-        <Image
-          fill
-          src={image}
-          alt="image"
-          className="object-cover"
-        />
+      <div className="relative min-h-[64px] min-w-[64px] drop-shadow-md flex items-center group">
+        <div className="absolute transition-all flex items-center justify-center bg-gradient-to-br from-orange-500 to-purple-500 p-10 px-5">
+          <AiFillHeart size={24} className="text-white h-full w-full" />
+        </div>
       </div>
-      <p className="font-medium truncate py-5">
-        { name }
-      </p>
-      <div className="absolute transition-all opacity-0 rounded-full flex items-center justify-center bg-orange-500 p-10 drop-shadow-md right-5 group-hover:opacity-100 hover:scale-105">
-        <FaPlay size={20} className="text-black" />
+      <div className="flex justify-between items-center w-full pr-7 group">
+        <p className="font-medium truncate py-5">
+          { name }
+        </p>
+        <p className="group-hover:translate-x-2 transition-all text-gray-900">
+          <BsArrowRightCircleFill size={20}/>
+        </p>
       </div>
+
     </button>
   );
 }

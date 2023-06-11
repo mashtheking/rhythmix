@@ -1,9 +1,15 @@
 import {usePathname} from "next/navigation";
 import {useMemo} from "react";
-import {AiFillHeart, AiFillHome, AiOutlineHeart, AiOutlineHome} from "react-icons/ai";
-import {BsSearch, BsSearchHeart} from "react-icons/bs";
+import {
+  AiFillHeart,
+  AiFillHome,
+  AiOutlineHeart,
+  AiOutlineHome,
+  AiOutlineSearch,
+  AiOutlineUser
+} from "react-icons/ai";
 
-const useRoutes = () => {
+const useSidebarRoutes = () => {
   const pathname = usePathname();
 
   return useMemo(() => [
@@ -20,11 +26,17 @@ const useRoutes = () => {
       href: '/liked',
     },
     {
-      icons: [BsSearch, BsSearchHeart],
+      icons: [AiOutlineSearch, AiOutlineSearch],
       label: 'Search',
       active: pathname === '/search',
       href: '/search'
-    }
+    },
+    {
+      icons: [AiOutlineUser, AiOutlineUser],
+      label: 'Account',
+      active: pathname === '/account',
+      href: '/account'
+    },
   ], [pathname]);
 }
-export default useRoutes;
+export default useSidebarRoutes;

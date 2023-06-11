@@ -1,26 +1,27 @@
 'use client';
 
-import {Song} from "@/types/types";
+import {Song} from "@/types";
 import MediaItem from "@/components/MediaItem";
 import LikeButton from "@/components/LikeButton";
 import {BsPauseFill, BsPlayFill} from "react-icons/bs";
 import {AiFillStepBackward, AiFillStepForward} from "react-icons/ai";
-import Slider from "@/components/Slider";
+import VolumeSlider from "@/components/VolumeSlider";
 import usePlayer from "@/hooks/usePlayer";
 import {useEffect, useState} from "react";
 import {ImVolumeHigh, ImVolumeLow, ImVolumeMedium, ImVolumeMute, ImVolumeMute2} from "react-icons/im";
 import useSound from "use-sound";
 import SeekSlider from "@/components/SeekSlider";
+import useVolume from "@/hooks/useVolume";
 
 interface PlayerContentProps {
   song: Song;
   songUrl: string;
 }
 
-const PlayerContent = ({ song, songUrl }: PlayerContentProps) => {
+const PlayerContent = ({song, songUrl}: PlayerContentProps) => {
   const player = usePlayer();
-  const [volume, setVolume] = useState(1);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { volume, setVolume } = useVolume();
+  const { isPlaying, setIsPlaying } = player;
 
   const PlayPauseIcon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = volume === 0 ? ImVolumeMute2 : volume <= 0.2 ? ImVolumeMute : volume <= 0.4 ? ImVolumeLow : volume <= 0.7 ? ImVolumeMedium : ImVolumeHigh;
@@ -48,7 +49,7 @@ const PlayerContent = ({ song, songUrl }: PlayerContentProps) => {
   }
 
   //This is the hook because of which we had to add key prop to PlayerContent because it can't handle dynamic url
-  const [play, { pause, duration, sound }] = useSound(
+  const [play, {pause, duration, sound}] = useSound(
     songUrl,
     {
       volume: volume,
@@ -110,62 +111,71 @@ const PlayerContent = ({ song, songUrl }: PlayerContentProps) => {
   const toggleMute = () => volume === 0 ? setVolume(1) : setVolume(0);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 h-full items-center">
-      <div className="flex w-full justify-start items-center">
-        <div className="flex items-center gap-x-2 sm:gap-x-4">
-          <MediaItem song={song} />
-          <LikeButton songId={song.id} />
+    <div className="grid grid-cols-2 md:grid-cols-3 w-full h-full items-center">
+
+        <div className="flex justify-start items-center gap-x-1 sm:gap-x-3 sm:w-fit">
+          <div className="truncate">
+            <MediaItem song={song}/>
+          </div>
+          <LikeButton songId={song.id}/>
         </div>
-      </div>
-      <div className="h-fit flex flex-col justify-end md:justify-center items-center w-full max-w-3xl gap-y-2">
-        <div className="flex flex-col gap-y-0.5 h-fit">
-          <div className="flex justify-between text-xs text-gray-400">
+
+      <div className="flex justify-end md:justify-center items-center pr-2 md:pr-0">
+        <div className="flex flex-col items-center gap-y-2">
+          <div className="flex gap-x-1 text-xs text-gray-500">
             <p>
               {currTime.min}:{currTime.sec}
             </p>
+            <SeekSlider
+              max={duration ? duration / 1000 : 0}
+              value={seconds}
+              onChange={(value) => {
+                pause();
+                setSeconds(value);
+                sound.seek([value]);
+              }}
+              onCommit={play}
+            />
             <p>
               {time.min}:{time.sec}
             </p>
           </div>
-          <SeekSlider
-            max={duration ? duration / 1000 : 0}
-            value={seconds}
-            onChange={(value) => sound.seek([value])}
-          />
-        </div>
 
-        <div className="flex flex-row justify-center items-center gap-x-6 h-fit">
-          <AiFillStepBackward
-            onClick={onPlayPrevious}
-            size={30}
-            className="text-gray-400 cursor-pointer hover:text-white transition-all"
-          />
-          <div
-            onClick={togglePlayPause}
-            className="flex items-center justify-center h-10 w-10 rounded-full bg-white p-1 cursor-pointer"
-          >
-            <PlayPauseIcon size={30} className="text-black" />
+          <div className="flex flex-row justify-between items-center gap-x-7">
+            <AiFillStepBackward
+              onClick={onPlayPrevious}
+              size={30}
+              className="text-gray-500 cursor-pointer hover:text-gray-900 transition-all"
+            />
+            <div
+              onClick={togglePlayPause}
+              className="flex items-center justify-center h-10 w-10 rounded-full bg-gray-900 p-1 cursor-pointer"
+            >
+              <PlayPauseIcon size={30} className="text-white"/>
+            </div>
+            <AiFillStepForward
+              onClick={onPlayNext}
+              size={30}
+              className="text-gray-500 cursor-pointer hover:text-gray-900 transition-all"
+            />
           </div>
-          <AiFillStepForward
-            onClick={onPlayNext}
-            size={30}
-            className="text-gray-400 cursor-pointer hover:text-white transition-all"
-          />
         </div>
       </div>
-      <div className="hidden md:flex w-full justify-end pr-2">
+
+      <div className="hidden md:flex justify-end items-center pr-2">
         <div className="flex items-center gap-x-2 w-32">
           <VolumeIcon
             onClick={toggleMute}
             size={34}
-            className="cursor-pointer"
+            className="cursor-pointer text-gray-900"
           />
-          <Slider
+          <VolumeSlider
             value={volume}
             onChange={(value) => setVolume(value)}
           />
         </div>
       </div>
+
     </div>
   );
 }

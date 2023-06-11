@@ -1,6 +1,6 @@
 'use client';
 
-import Modal from "@/components/Modal";
+import Modal from "@/components/modals/Modal";
 import useUploadModal from "@/hooks/useUploadModal";
 import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
 import {useState} from "react";
@@ -12,6 +12,7 @@ import uniqid from "uniqid";
 import {useSupabaseClient} from "@supabase/auth-helpers-react";
 import {useRouter} from "next/navigation";
 import Spinner from "@/components/loading/Spinner";
+import Compressor from 'compressorjs';
 
 const UploadModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,41 +62,51 @@ const UploadModal = () => {
         return toast.error(songError.message);
       }
 
-      //Upload image
-      const {
-        data: imageData,
-        error: imageError,
-      } = await supabaseClient
-        .storage
-        .from('images')
-        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
-          cacheControl: '3600',
-          upsert: false
-        });
+      //Compress image before uploading
+      new Compressor(imageFile, {
+        maxWidth: 512,
+        maxHeight: 512,
 
-      if(imageError) {
-        return toast.error(imageError.message);
-      }
+        async success(file: File | Blob) {
+          //Upload image
+          const {
+            data: imageData,
+            error: imageError,
+          } = await supabaseClient
+            .storage
+            .from('images')
+            .upload(`image-${values.title}-${uniqueID}`, file, {
+              cacheControl: '3600',
+              upsert: false
+            });
 
-      const { error: supabaseError } = await supabaseClient
-        .from('songs')
-        .insert({
-          user_id: user.id,
-          title: values.title,
-          author: values.author,
-          image_path: imageData.path,
-          song_path: songData?.path
-        })
+          if(imageError) {
+            return toast.error(imageError.message);
+          }
 
-      if(supabaseError) {
-        return toast.error(supabaseError.message)
-      }
+          const { error: supabaseError } = await supabaseClient
+            .from('songs')
+            .insert({
+              user_id: user.id,
+              title: values.title,
+              author: values.author,
+              image_path: imageData.path,
+              song_path: songData?.path
+            })
 
-      router.refresh();
-      toast.success('Song created');
-      reset();
-      onClose();
+          if(supabaseError) {
+            return toast.error(supabaseError.message)
+          }
 
+          router.refresh();
+          toast.success('Song created');
+          reset();
+          onClose();
+        },
+        error() {
+          toast.error("Something went wrong");
+        }
+      });
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -156,7 +167,7 @@ const UploadModal = () => {
         <Button
           disabled={isLoading}
           type="submit"
-          className="rounded-md text-white flex flex-row space-x-2 justify-center"
+          className="rounded-md text-white flex flex-row space-x-2 justify-center hover:bg-orange-600"
         >
           {isLoading && <Spinner />}
           {isLoading ? 'Uploading' : 'Create'}

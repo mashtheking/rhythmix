@@ -79,7 +79,7 @@ const LikeButton = ({ songId }: LikeButtonProps) => {
       onClick={handleLike}
       className="hover:scale-125 transition-all"
     >
-      <Icon size={20} className={`${isLiked ? 'text-orange-500': 'text-white'}`} />
+      <Icon size={20} className={`${isLiked ? 'text-orange-500': 'text-gray-500'}`} />
     </button>
   );
 }

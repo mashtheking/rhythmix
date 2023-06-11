@@ -9,7 +9,7 @@ interface BoxProps {
 const Box = ({ children, className }: BoxProps) => {
   return (
     <div className={twMerge(
-      "bg-gray-900 rounded-lg h-fit w-full",
+      "bg-gray-200 rounded-lg w-full",
       className
     )}>
       { children }

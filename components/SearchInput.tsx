@@ -13,7 +13,7 @@ const SearchInput = () => {
 
   useEffect(() => {
     const query = {
-      title: debouncedValue,
+      searchString: debouncedValue,
     };
 
     const url = qs.stringifyUrl({
@@ -26,7 +26,7 @@ const SearchInput = () => {
 
   return (
     <Input
-      placeholder="What do you want to listen ?"
+      placeholder="What do you want to listen to?"
       value={value}
       onChange={(e) => setValue(e.target.value)}
     />

@@ -1,4 +1,4 @@
-import {Song} from "@/types/types";
+import {Song} from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 import useAuthModal from "@/hooks/useAuthModal";
 import useUser from "@/hooks/useUser";

@@ -1,17 +1,18 @@
 'use client';
 
-import {ReactNode} from "react";
-import {useRouter} from "next/navigation";
+import {ReactNode, useEffect} from "react";
+import {usePathname, useRouter} from "next/navigation";
 import {twMerge} from "tailwind-merge";
 import {RxCaretLeft, RxCaretRight} from "react-icons/rx";
-import {AiFillHome} from "react-icons/ai";
-import {BsSearchHeart} from "react-icons/bs";
+import {AiOutlineHome, AiOutlineSearch} from "react-icons/ai";
 import Button from "@/components/Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import {useSupabaseClient} from "@supabase/auth-helpers-react";
 import useUser from "@/hooks/useUser";
-import {FaUserAlt} from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import usePlayer from "@/hooks/usePlayer";
+import useAvatarModal from "@/hooks/useAvatarModal";
+import Image from "next/image";
 
 interface HeaderProps {
   children: ReactNode;
@@ -19,14 +20,24 @@ interface HeaderProps {
 }
 
 const Header = ({ children, className }: HeaderProps) => {
+  const pathname = usePathname();
   const router = useRouter();
   const { onOpen } = useAuthModal();
+  const { avatar, setAvatar } = useAvatarModal();
   const supabaseClient = useSupabaseClient();
-  const { user } = useUser();
+  const { user, userDetails } = useUser();
+  const player = usePlayer();
+
+  useEffect(() => {
+    if (userDetails?.avatar_url) {
+      setAvatar(userDetails?.avatar_url);
+    }
+  }, [userDetails?.avatar_url, setAvatar]);
 
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
-    //TODO: Reset any playing songs
+    setAvatar(null);
+    player.reset();
     router.refresh();
 
     if (error) {
@@ -39,7 +50,7 @@ const Header = ({ children, className }: HeaderProps) => {
   return (
     <div
       className={twMerge(
-        "h-fit bg-gradient-to-b from-orange-800 p-6",
+        "h-fit bg-gradient-to-b from-orange-400 p-6",
         className
       )}
     >
@@ -47,7 +58,7 @@ const Header = ({ children, className }: HeaderProps) => {
         <div className="hidden md:flex gap-x-2 items-center">
           <button
             onClick={() => router.back()}
-            className="rounded-full bg-black/50 flex items-center justify-center hover:bg-black/75 transition-all"
+            className="rounded-full bg-gray-900/50 hover:bg-gray-900 flex items-center justify-center transition-all"
           >
             <RxCaretLeft
               size={35}
@@ -56,7 +67,7 @@ const Header = ({ children, className }: HeaderProps) => {
           </button>
           <button
             onClick={() => router.forward()}
-            className="rounded-full bg-black/50 flex items-center justify-center hover:bg-black/75 transition-all"
+            className="rounded-full bg-gray-900/50 hover:bg-gray-900 flex items-center justify-center transition-all"
           >
             <RxCaretRight
               size={35}
@@ -67,56 +78,57 @@ const Header = ({ children, className }: HeaderProps) => {
         <div className="flex md:hidden gap-x-4 items-center">
           <Button
             onClick={() => router.push('/')}
-            className="p-2 bg-white"
+            className={twMerge(
+              "p-1.5 text-white",
+              pathname === '/' ? 'bg-gray-900' : 'bg-gray-900/50 hover:bg-gray-900'
+            )}
           >
-            <AiFillHome className="text-black" size={20} />
+            <AiOutlineHome size={20} />
           </Button>
           <Button
             onClick={() => router.push('/search')}
-            className="p-2 bg-white"
+            className={twMerge(
+              "p-1.5 text-white",
+              pathname === '/search' ? 'bg-gray-900' : 'bg-gray-900/50 hover:bg-gray-900'
+            )}
           >
-            <BsSearchHeart className="text-black" size={20} />
+            <AiOutlineSearch size={20} />
           </Button>
         </div>
-        <div className="flex justify-between items-center gap-x-4">
+        <div className="flex justify-between items-center">
           {
             user ? (
-              <div className="flex gap-x-4 items-center">
+              <div className="flex gap-x-3 items-center">
                 <Button
                   onClick={handleLogout}
-                  className="bg-white px-6 py-2"
+                  className="py-0 bg-transparent text-gray-900 hover:text-white transition-all"
                 >
                   Logout
                 </Button>
                 <Button
                   onClick={() => {router.push('/account')}}
-                  className="bg-white"
+                  className="p-0 hover:opacity-70 transition-all bg-transparent"
                 >
-                  <FaUserAlt />
+                  <Image
+                    width={40}
+                    height={40}
+                    src={avatar || "/placeholders/user-dark.svg"}
+                    alt="account"
+                    className="rounded-full object-cover shadow-md"
+                  />
                 </Button>
               </div>
             ) : (
-              <>
-                <div>
-                  <Button
-                    onClick={onOpen}
-                    className="py-0 bg-transparent text-white font-medium transition-all"
-                  >
-                    Sign up
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    onClick={onOpen}
-                    className="bg-white px-6 py-2 transition-all"
-                  >
-                    Login
-                  </Button>
-                </div>
-              </>
+              <div>
+                <Button
+                  onClick={onOpen}
+                  className="bg-gray-900 hover:bg-gray-900/50 text-white px-6 py-2 transition-all"
+                >
+                  Upload or Listen
+                </Button>
+              </div>
             )
           }
-
         </div>
       </div>
       { children }

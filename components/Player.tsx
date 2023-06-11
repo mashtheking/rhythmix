@@ -16,7 +16,7 @@ const Player = () => {
   }
 
   return (
-    <div className="fixed bottom-0 bg-black w-full px-4 pb-0.5 h-20">
+    <div className="fixed bottom-0 bg-white w-full px-4 pb-0.5 h-20">
       <PlayerContent
         key={songUrl} //Whenever the key changes it destroys the component and re-renders it so that songs don't overlap
         song={song}

@@ -1,6 +1,6 @@
 'use client';
 
-import {Song} from "@/types/types";
+import {Song} from "@/types";
 import SongCard from "@/components/SongCard";
 import useOnPlay from "@/hooks/useOnPlay";
 
@@ -13,14 +13,14 @@ const PageContent = ({ songs }: PageContentProps) => {
 
   if (songs.length === 0) {
     return (
-      <div className="mt-4 text-gray-400">
+      <div className="flex justify-center md:justify-start mt-4 text-gray-600">
         No songs available.
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 mt-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mt-4">
       {
         songs.map((song) => (
           <SongCard
