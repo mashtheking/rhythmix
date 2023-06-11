@@ -14,7 +14,7 @@ const SidebarItem = ({ icons, label, active, href }: SidebarItemProps) => {
   const Icon = icons[active ? 1 : 0];
   const { user } = useUser();
 
-  if (!user) {
+  if (!user && href === "/account") {
     return null;
   }
 
