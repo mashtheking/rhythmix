@@ -9,6 +9,7 @@ import {toast} from "react-hot-toast";
 import {getStripe} from "@/libs/stripeClient";
 import {postData} from "@/libs/helpers";
 import useSubscribeModal from "@/hooks/useSubscribeModal";
+import Spinner from "@/components/loading/Spinner";
 
 interface SubscribeModalProps {
   products: ProductWithPrice[];
@@ -80,7 +81,10 @@ const SubscribeModal = ({ products }: SubscribeModalProps) => {
                 disabled={isLoading || price.id === priceIdLoading}
                 className="rounded-md text-white"
               >
-                {`Subscribe for ${formatPrice(price)} a ${price.interval}`}
+                <div className="flex justify-center items-center gap-x-2">
+                  { (isLoading || price.id === priceIdLoading) && <Spinner /> }
+                  <p>{`Subscribe for ${formatPrice(price)} a ${price.interval}`}</p>
+                </div>
               </Button>
             ))
           })
