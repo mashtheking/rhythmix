@@ -1,13 +1,13 @@
 import { Price } from "@/types";
 
 export const getURL = () => {
-  let url =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    process.env.NEXT_PUBLIC_VERCEL_URL ??
-    'http://localhost:3000/'
+  let url;
 
-  url = url.includes('http') ? url : `https://${url}`;
-  url = url.charAt(url.length - 1) === '/' ? url : `${url}/`;
+  if (process.env.NODE_ENV !== 'production') {
+    url = 'http://localhost:3000/';
+  } else {
+    url = 'https://rhythmix-music.vercel.app/'
+  }
 
   return url;
 };
