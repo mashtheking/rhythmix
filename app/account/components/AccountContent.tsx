@@ -31,7 +31,7 @@ const AccountContent = ({ songs }: AccountContentProps) => {
     if (!isLoading && !user) {
       authModal.onOpen();
     }
-  }, [isLoading, user, authModal]);
+  }, [isLoading, user]);
 
   if (!isLoading && !user) {
     return (
@@ -42,8 +42,8 @@ const AccountContent = ({ songs }: AccountContentProps) => {
   }
 
   const redirectToCustomerPortal = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const { url } = await postData({
         url: '/api/create-portal-link'
       });
