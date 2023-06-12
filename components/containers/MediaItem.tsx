@@ -30,10 +30,10 @@ const MediaItem = ({ song, onClick }: MediaItemProps) => {
       <div className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden">
         <Image
           fill
-          src={imageUrl || '/images/liked.png'}
+          src={imageUrl || '/images/song.svg'}
           alt='album cover'
           placeholder="blur"
-          blurDataURL="/images/song.svg"
+          blurDataURL="/images/song.webp"
           className="object-cover group-hover:scale-105 transition-all"
         />
       </div>

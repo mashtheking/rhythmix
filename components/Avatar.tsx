@@ -28,6 +28,8 @@ const Avatar = () => {
       <Image
         fill
         src={avatar || "/images/user.svg"}
+        placeholder="blur"
+        blurDataURL="/images/user.webp"
         alt="playlist"
         className={`
           object-cover rounded-full transition-all

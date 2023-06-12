@@ -114,6 +114,8 @@ const Header = ({ children, className }: HeaderProps) => {
                     height={40}
                     src={avatar || "/images/user-dark.svg"}
                     alt="account"
+                    placeholder="blur"
+                    blurDataURL="/images/user-dark.webp"
                     className="rounded-full object-cover shadow-md"
                   />
                 </Button>

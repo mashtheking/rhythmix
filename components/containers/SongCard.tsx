@@ -24,10 +24,10 @@ const SongCard = ({ song, onClick }: SongItemProps) => {
       <div className="relative aspect-square w-full h-full rounded-md overflow-hidden">
         <Image
           fill
-          src={imagePath || '/images/liked.png'}
+          src={imagePath || '/images/song.svg'}
           alt='album cover'
           placeholder="blur"
-          blurDataURL="/images/song.svg"
+          blurDataURL="/images/song.webp"
           className={`
             object-cover transition-all
             ${ (activeId === song.id && isPlaying) ? 'brightness-50' : 'group-hover:scale-105' }
