@@ -112,7 +112,7 @@ const Header = ({ children, className }: HeaderProps) => {
                   <Image
                     width={40}
                     height={40}
-                    src={avatar || "/placeholders/user-dark.svg"}
+                    src={avatar || "/images/user-dark.svg"}
                     alt="account"
                     className="rounded-full object-cover shadow-md"
                   />

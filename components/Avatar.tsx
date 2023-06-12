@@ -27,7 +27,7 @@ const Avatar = () => {
     >
       <Image
         fill
-        src={avatar || "/placeholders/user.svg"}
+        src={avatar || "/images/user.svg"}
         alt="playlist"
         className={`
           object-cover rounded-full transition-all

@@ -27,7 +27,7 @@ const SongCard = ({ song, onClick }: SongItemProps) => {
           src={imagePath || '/images/liked.png'}
           alt='album cover'
           placeholder="blur"
-          blurDataURL="/placeholders/song.svg"
+          blurDataURL="/images/song.svg"
           className={`
             object-cover transition-all
             ${ (activeId === song.id && isPlaying) ? 'brightness-50' : 'group-hover:scale-105' }

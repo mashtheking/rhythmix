@@ -33,7 +33,7 @@ const MediaItem = ({ song, onClick }: MediaItemProps) => {
           src={imageUrl || '/images/liked.png'}
           alt='album cover'
           placeholder="blur"
-          blurDataURL="/placeholders/song.svg"
+          blurDataURL="/images/song.svg"
           className="object-cover group-hover:scale-105 transition-all"
         />
       </div>

@@ -132,19 +132,19 @@ const UploadModal = () => {
           id="title"
           disabled={isLoading}
           {...register('title', { required: true })}
-          placeholder="Song title"
+          placeholder="Title"
           className="bg-gray-200"
         />
         <Input
           id="author"
           disabled={isLoading}
           {...register('author', { required: true })}
-          placeholder="Song author"
+          placeholder="Artist"
           className="bg-gray-200"
         />
         <div>
           <div className="pb-1">
-            Select a song file
+            Select an mp3 file
           </div>
           <Input
             id="song"
@@ -157,7 +157,7 @@ const UploadModal = () => {
         </div>
         <div>
           <div className="pb-1">
-            Select an image
+            Select a cover image
           </div>
           <Input
             id="image"
