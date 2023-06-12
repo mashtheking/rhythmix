@@ -36,7 +36,7 @@ const AccountContent = ({ songs }: AccountContentProps) => {
   if (!isLoading && !user) {
     return (
       <div className="flex flex-col gap-y-2 w-full px-6 text-gray-500">
-        Login to view your subscription details.
+        Login to view your subscription details and uploaded songs.
       </div>
     );
   }
