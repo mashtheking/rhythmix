@@ -29,7 +29,7 @@ const UploadContent = ({ songs }: UploadContentProps) => {
       return authModal.onOpen();
     }
 
-    if (!subscription) {
+    if (!subscription && "" != "") {
       return subscribeModal.onOpen();
     }
 
