@@ -29,9 +29,9 @@ const UploadContent = ({ songs }: UploadContentProps) => {
       return authModal.onOpen();
     }
 
-    if (!subscription && "" != "") {
-      return subscribeModal.onOpen();
-    }
+   // if (!subscription && "" != "") {
+    //  return subscribeModal.onOpen();
+  //  }
 
     return uploadModal.onOpen();
   };
