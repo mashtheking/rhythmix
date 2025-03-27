@@ -21,7 +21,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://rhythmix-music.vercel.app',
+    url: 'https://rhythmix-dun.vercel.app/',
     title: "Rhythmix",
     siteName: 'Rhythmix',
     description: "Sync your soul. Rhythms take control!",
