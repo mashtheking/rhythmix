@@ -2,8 +2,8 @@
 const nextConfig = {
   images: {
     domains: [
-      "clumpapavfxxlavsbxdv.supabase.co",
-      "avatars.githubusercontent.com",
+      "rzsfhwwcjrgbhfbijdkg.supabase.co",
+      "rhythmix-dun.vercel.app",
       "lh3.googleusercontent.com"
     ]
   }
